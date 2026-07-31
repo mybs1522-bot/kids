@@ -37,7 +37,7 @@
       <a href="#daily-routine" class="nav-link">🗓️ Daily Routine</a>
       <a href="#characters" class="nav-link">🦁 26 Buddies</a>
       <a href="#comparison" class="nav-link">⚖️ Why Us</a>
-      <a href="#play-zone" class="nav-link nav-btn btn-pink">🎮 Interactive Toys</a>
+      <a href="toys.html" class="nav-link nav-btn btn-pink">🎮 Free Toys</a>
       <a href="#pricing" class="nav-link nav-btn btn-yellow">🛒 Get Worksheets</a>
     </nav>
 
@@ -481,103 +481,12 @@
       </div>
     </section>
 
-    <!-- INTERACTIVE PLAY ZONE (FUNKY TOYS) -->
-    <section id="play-zone" class="card-section play-zone-section">
-      <div class="container">
-        <div class="section-header">
-          <span class="section-tag">🎮 Bonus Funky Corner</span>
-          <h2>Interactive Play Zone</h2>
-          <p>Try out our live music, balloon popping, and doodle tools!</p>
-        </div>
-
-        <!-- Toy 1: Rainbow Magic Piano Keyboard -->
-        <div id="xylophone" class="toy-card piano-toy-card">
-          <h3>🎹 Rainbow Magic Piano Keyboard</h3>
-          <p>Tap the colorful piano keys or press your computer keyboard keys (A, S, D, F, G, H, J, K / W, E, T, Y, U) to play music!</p>
-          
-          <div class="piano-keyboard-wrapper">
-            <div class="piano-keyboard">
-              <!-- White Keys & Black Keys -->
-              <div class="piano-key white-key key-c" data-note="C4" data-key="A" style="--key-color:#ff4757">
-                <span class="key-label">C<br><small>(A)</small></span>
-              </div>
-              <div class="piano-key black-key key-cs" data-note="C#4" data-key="W">
-                <span class="key-label">C#<br><small>(W)</small></span>
-              </div>
-              <div class="piano-key white-key key-d" data-note="D4" data-key="S" style="--key-color:#ffa502">
-                <span class="key-label">D<br><small>(S)</small></span>
-              </div>
-              <div class="piano-key black-key key-ds" data-note="D#4" data-key="E">
-                <span class="key-label">D#<br><small>(E)</small></span>
-              </div>
-              <div class="piano-key white-key key-e" data-note="E4" data-key="D" style="--key-color:#2ed573">
-                <span class="key-label">E<br><small>(D)</small></span>
-              </div>
-              <div class="piano-key white-key key-f" data-note="F4" data-key="F" style="--key-color:#1e90ff">
-                <span class="key-label">F<br><small>(F)</small></span>
-              </div>
-              <div class="piano-key black-key key-fs" data-note="F#4" data-key="T">
-                <span class="key-label">F#<br><small>(T)</small></span>
-              </div>
-              <div class="piano-key white-key key-g" data-note="G4" data-key="G" style="--key-color:#3742fa">
-                <span class="key-label">G<br><small>(G)</small></span>
-              </div>
-              <div class="piano-key black-key key-gs" data-note="G#4" data-key="Y">
-                <span class="key-label">G#<br><small>(Y)</small></span>
-              </div>
-              <div class="piano-key white-key key-a" data-note="A4" data-key="H" style="--key-color:#9b59b6">
-                <span class="key-label">A<br><small>(H)</small></span>
-              </div>
-              <div class="piano-key black-key key-as" data-note="A#4" data-key="U">
-                <span class="key-label">A#<br><small>(U)</small></span>
-              </div>
-              <div class="piano-key white-key key-b" data-note="B4" data-key="J" style="--key-color:#ff78ae">
-                <span class="key-label">B<br><small>(J)</small></span>
-              </div>
-              <div class="piano-key white-key key-c2" data-note="C5" data-key="K" style="--key-color:#ff6b81">
-                <span class="key-label">C2<br><small>(K)</small></span>
-              </div>
-            </div>
-          </div>
-
-          <div class="piano-controls">
-            <button class="btn btn-outline" id="play-song-btn">🎼 Auto-Play "Twinkle Twinkle Little Star"</button>
-          </div>
-        </div>
-
-        <!-- Toy 2: Balloon Pop Game -->
-        <div id="balloons" class="toy-card">
-          <h3>🎈 Pop the Floating Balloons</h3>
-          <div class="game-dashboard">
-            <div class="score-card">Score: <span id="game-score">0</span></div>
-            <div class="score-card">High Score: <span id="high-score">0</span></div>
-            <button class="btn btn-primary" id="start-balloon-game">▶️ Start Game</button>
-          </div>
-          <div id="balloon-arena" class="balloon-arena">
-            <div class="start-overlay" id="game-overlay">
-              <h3>Press Start to Pop Balloons!</h3>
-              <p>Catch floating balloons before time runs out!</p>
-            </div>
-          </div>
-        </div>
-
-        <!-- Toy 3: Magic Canvas -->
-        <div id="canvas" class="toy-card">
-          <h3>🎨 Magic Doodle Studio</h3>
-          <div class="canvas-wrapper">
-            <div class="canvas-toolbar">
-              <input type="color" id="brush-color" value="#ff4757">
-              <input type="range" id="brush-size" min="4" max="30" value="10">
-              <button class="btn-tool active" id="tool-draw">✏️ Draw</button>
-              <button class="btn-tool" id="tool-stamp-star">⭐ Star</button>
-              <button class="btn-tool" id="tool-stamp-heart">❤️ Heart</button>
-              <button class="btn-tool" id="tool-eraser">🧹 Eraser</button>
-              <button class="btn-tool btn-danger" id="tool-clear">🗑️ Clear</button>
-            </div>
-            <canvas id="doodle-canvas" width="800" height="400"></canvas>
-          </div>
-        </div>
-      </div>
+    <!-- BANNER TO FREE INTERACTIVE TOYS PAGE -->
+    <section class="card-section text-center-banner" style="text-align:center;background:linear-gradient(135deg,#f0fdf4 0%,#e0f2fe 100%)">
+      <span class="section-tag">🎮 Bonus Play Zone</span>
+      <h2 style="font-family:var(--font-heading);font-size:2.2rem;margin-bottom:10px">Want Your Kids To Play Free Educational Games?</h2>
+      <p style="font-size:1.1rem;color:var(--text-muted);margin-bottom:20px">Try out our live Rainbow Piano, Circular Balloon Pop game, and Magic Doodle Studio!</p>
+      <a href="toys.html" class="btn btn-secondary btn-bounce">🎮 Play Free Interactive Toys Now</a>
     </section>
 
     <!-- PRICING & CHECKOUT OPTIONS -->
