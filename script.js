@@ -1,9 +1,9 @@
 /* ==========================================================================
-   Kids Playland - Interactive Logic, Web Audio Synth, Games & Canvas
+   TinySparks Pre-Schoolers Learning - Modern Funky Interactive Logic
    ========================================================================== */
 
 document.addEventListener('DOMContentLoaded', () => {
-  // Global State
+  // Global Star Counter
   let totalStars = parseInt(localStorage.getItem('kids_stars') || '0', 10);
   updateStarCounter();
 
@@ -14,19 +14,17 @@ document.addEventListener('DOMContentLoaded', () => {
       const AudioContext = window.AudioContext || window.webkitAudioContext;
       audioCtx = new AudioContext();
     }
-    if (audioCtx.state === 'suspended') {
-      audioCtx.resume();
-    }
+    if (audioCtx.state === 'suspended') audioCtx.resume();
     return audioCtx;
   }
 
   // Text to Speech
   function speakText(text) {
     if ('speechSynthesis' in window) {
-      window.speechSynthesis.cancel(); // stop previous speech
+      window.speechSynthesis.cancel();
       const utterance = new SpeechSynthesisUtterance(text);
-      utterance.rate = 0.9;
-      utterance.pitch = 1.2; // friendly kid voice
+      utterance.rate = 0.95;
+      utterance.pitch = 1.2;
       window.speechSynthesis.speak(utterance);
     }
   }
@@ -44,17 +42,172 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // ==========================================================================
-  // SECTION 1: Rainbow Xylophone Logic
+  // Currency Switcher Logic
+  // ==========================================================================
+  const currencySelect = document.getElementById('currency-select');
+  const priceValues = document.querySelectorAll('.price-val');
+  const currSymbols = document.querySelectorAll('.curr-symbol');
+  const heroPrice = document.getElementById('hero-price');
+
+  const currencySymbolsMap = {
+    'GBP': '£',
+    'USD': '$',
+    'EUR': '€',
+    'INR': '₹',
+    'AUD': 'A$'
+  };
+
+  if (currencySelect) {
+    currencySelect.addEventListener('change', (e) => {
+      const curr = e.target.value;
+      const symbol = currencySymbolsMap[curr] || '£';
+
+      currSymbols.forEach(s => s.textContent = symbol);
+      priceValues.forEach(pv => {
+        const key = `data-${curr.toLowerCase()}`;
+        if (pv.getAttribute(key)) {
+          pv.textContent = pv.getAttribute(key);
+        }
+      });
+
+      if (heroPrice) {
+        heroPrice.textContent = `${symbol}${curr === 'GBP' ? '6.99' : (curr === 'USD' ? '8.99' : '699')}`;
+      }
+    });
+  }
+
+  // ==========================================================================
+  // Routine Tabs Switcher
+  // ==========================================================================
+  const tabBtns = document.querySelectorAll('.tab-btn');
+  const tabContents = document.querySelectorAll('.tab-content');
+
+  tabBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      tabBtns.forEach(b => b.classList.remove('active'));
+      tabContents.forEach(c => c.classList.remove('active'));
+
+      btn.classList.add('active');
+      const targetId = `tab-${btn.dataset.tab}`;
+      const targetContent = document.getElementById(targetId);
+      if (targetContent) targetContent.classList.add('active');
+    });
+  });
+
+  // ==========================================================================
+  // 26 Animal Buddy Cards Interactivity
+  // ==========================================================================
+  const buddyCards = document.querySelectorAll('.buddy-card');
+  buddyCards.forEach(card => {
+    card.addEventListener('click', () => {
+      const name = card.dataset.name;
+      speakText(`${name}! Ready to learn!`);
+      playCheerSound();
+      addStars(1);
+    });
+  });
+
+  function playCheerSound() {
+    const ctx = getAudioContext();
+    const osc = ctx.createOscillator();
+    const gain = ctx.createGain();
+
+    osc.type = 'triangle';
+    osc.frequency.setValueAtTime(300, ctx.currentTime);
+    osc.frequency.exponentialRampToValueAtTime(800, ctx.currentTime + 0.3);
+
+    gain.gain.setValueAtTime(0.5, ctx.currentTime);
+    gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.3);
+
+    osc.connect(gain);
+    gain.connect(ctx.destination);
+    osc.start();
+    osc.stop(ctx.currentTime + 0.3);
+  }
+
+  // ==========================================================================
+  // FAQ Accordion Toggling
+  // ==========================================================================
+  const faqQuestions = document.querySelectorAll('.faq-question');
+  faqQuestions.forEach(btn => {
+    btn.addEventListener('click', () => {
+      const item = btn.parentElement;
+      item.classList.toggle('open');
+      const span = btn.querySelector('span');
+      if (span) span.textContent = item.classList.contains('open') ? '−' : '+';
+    });
+  });
+
+  // ==========================================================================
+  // Modals & Checkout Simulation
+  // ==========================================================================
+  const checkoutModal = document.getElementById('checkout-modal');
+  const closeModalBtn = document.getElementById('close-modal');
+  const buyBtns = document.querySelectorAll('.buy-btn');
+  const modalPackTitle = document.getElementById('modal-pack-title');
+  const modalPriceDisplay = document.getElementById('modal-price-display');
+  const checkoutForm = document.getElementById('checkout-form');
+
+  buyBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      const pack = btn.dataset.pack;
+      const price = btn.dataset.price;
+      const curr = currencySelect ? currencySelect.value : 'GBP';
+      const symbol = currencySymbolsMap[curr] || '£';
+
+      if (modalPackTitle) modalPackTitle.textContent = `Selected Pack: ${pack}`;
+      if (modalPriceDisplay) modalPriceDisplay.textContent = `${symbol}${price}`;
+      if (checkoutModal) checkoutModal.classList.remove('hidden');
+    });
+  });
+
+  if (closeModalBtn) {
+    closeModalBtn.addEventListener('click', () => {
+      if (checkoutModal) checkoutModal.classList.add('hidden');
+    });
+  }
+
+  if (checkoutForm) {
+    checkoutForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const email = document.getElementById('checkout-email').value;
+      alert(`🎉 Thank you! Your download link has been sent to ${email}.\n\nClick OK to start your instant PDF download.`);
+      if (checkoutModal) checkoutModal.classList.add('hidden');
+      addStars(10);
+      triggerConfetti();
+    });
+  }
+
+  // Video Modal
+  const videoModal = document.getElementById('video-modal');
+  const openVideoBtn = document.getElementById('open-video-modal');
+  const closeVideoBtn = document.getElementById('close-video-modal');
+
+  if (openVideoBtn) {
+    openVideoBtn.addEventListener('click', () => {
+      if (videoModal) videoModal.classList.remove('hidden');
+    });
+  }
+  if (closeVideoBtn) {
+    closeVideoBtn.addEventListener('click', () => {
+      if (videoModal) videoModal.classList.add('hidden');
+    });
+  }
+
+  // Audio Welcome Button
+  const btnSayHello = document.getElementById('btn-say-hello');
+  if (btnSayHello) {
+    btnSayHello.addEventListener('click', () => {
+      speakText("Welcome to TinySparks! Discover our 20-week printable master plan for fun, screen-free learning!");
+    });
+  }
+
+  // ==========================================================================
+  // Xylophone Logic
   // ==========================================================================
   const noteFrequencies = {
-    'C4': 261.63,
-    'D4': 293.66,
-    'E4': 329.63,
-    'F4': 349.23,
-    'G4': 392.00,
-    'A4': 440.00,
-    'B4': 493.88,
-    'C5': 523.25
+    'C4': 261.63, 'D4': 293.66, 'E4': 329.63, 'F4': 349.23,
+    'G4': 392.00, 'A4': 440.00, 'B4': 493.88, 'C5': 523.25
   };
 
   function playNote(freq, duration = 0.6) {
@@ -62,10 +215,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const osc = ctx.createOscillator();
     const gain = ctx.createGain();
 
-    osc.type = 'sine'; // warm xylophone tone
+    osc.type = 'sine';
     osc.frequency.setValueAtTime(freq, ctx.currentTime);
-
-    // Bell-like envelope
     gain.gain.setValueAtTime(1.0, ctx.currentTime);
     gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + duration);
 
@@ -88,13 +239,9 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
-  // Automated Twinkle Twinkle Song
   const songBtn = document.getElementById('play-song-btn');
   if (songBtn) {
-    const twinkleSong = [
-      'C4', 'C4', 'G4', 'G4', 'A4', 'A4', 'G4',
-      'F4', 'F4', 'E4', 'E4', 'D4', 'D4', 'C4'
-    ];
+    const twinkleSong = ['C4', 'C4', 'G4', 'G4', 'A4', 'A4', 'G4', 'F4', 'F4', 'E4', 'E4', 'D4', 'D4', 'C4'];
     let isPlayingSong = false;
 
     songBtn.addEventListener('click', async () => {
@@ -119,90 +266,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // ==========================================================================
-  // SECTION 2: Animal Sounds & Facts Logic
-  // ==========================================================================
-  function playAnimalSynthSound(soundType) {
-    const ctx = getAudioContext();
-    const now = ctx.currentTime;
-    const osc = ctx.createOscillator();
-    const gain = ctx.createGain();
-
-    if (soundType === 'roar') { // Lion
-      osc.type = 'sawtooth';
-      osc.frequency.setValueAtTime(120, now);
-      osc.frequency.exponentialRampToValueAtTime(50, now + 0.8);
-      gain.gain.setValueAtTime(0.8, now);
-      gain.gain.exponentialRampToValueAtTime(0.01, now + 0.8);
-    } else if (soundType === 'trumpet') { // Elephant
-      osc.type = 'triangle';
-      osc.frequency.setValueAtTime(300, now);
-      osc.frequency.linearRampToValueAtTime(600, now + 0.3);
-      osc.frequency.linearRampToValueAtTime(450, now + 0.7);
-      gain.gain.setValueAtTime(0.7, now);
-      gain.gain.exponentialRampToValueAtTime(0.01, now + 0.7);
-    } else if (soundType === 'quack') { // Duck
-      osc.type = 'sawtooth';
-      osc.frequency.setValueAtTime(280, now);
-      osc.frequency.linearRampToValueAtTime(180, now + 0.25);
-      gain.gain.setValueAtTime(0.6, now);
-      gain.gain.exponentialRampToValueAtTime(0.01, now + 0.25);
-    } else if (soundType === 'ribbit') { // Frog
-      osc.type = 'square';
-      osc.frequency.setValueAtTime(150, now);
-      osc.frequency.linearRampToValueAtTime(80, now + 0.2);
-      gain.gain.setValueAtTime(0.5, now);
-      gain.gain.exponentialRampToValueAtTime(0.01, now + 0.2);
-    } else { // Default chirp
-      osc.type = 'sine';
-      osc.frequency.setValueAtTime(600, now);
-      osc.frequency.exponentialRampToValueAtTime(900, now + 0.3);
-      gain.gain.setValueAtTime(0.5, now);
-      gain.gain.exponentialRampToValueAtTime(0.01, now + 0.3);
-    }
-
-    osc.connect(gain);
-    gain.connect(ctx.destination);
-    osc.start(now);
-    osc.stop(now + 0.8);
-  }
-
-  const animalCards = document.querySelectorAll('.animal-card');
-  const factBox = document.getElementById('animal-fact-box');
-  const factText = document.getElementById('fact-text');
-
-  animalCards.forEach(card => {
-    card.addEventListener('click', () => {
-      const name = card.dataset.name;
-      const sound = card.dataset.sound;
-      const fact = card.dataset.fact;
-
-      playAnimalSynthSound(sound);
-      speakText(`${name}! ${fact}`);
-
-      if (factBox && factText) {
-        factBox.classList.remove('hidden');
-        factText.textContent = `🦁 ${name}: ${fact}`;
-      }
-    });
-  });
-
-  // Hero Welcome Voice Button
-  const btnSayHello = document.getElementById('btn-say-hello');
-  if (btnSayHello) {
-    btnSayHello.addEventListener('click', () => {
-      speakText("Welcome to Kids Playland! Have a super fun time exploring music, games, animals, and drawing!");
-    });
-  }
-
-  const btnExplore = document.getElementById('btn-explore');
-  if (btnExplore) {
-    btnExplore.addEventListener('click', () => {
-      document.getElementById('xylophone').scrollIntoView({ behavior: 'smooth' });
-    });
-  }
-
-  // ==========================================================================
-  // SECTION 3: Balloon Pop Game Logic
+  // Balloon Pop Game Logic
   // ==========================================================================
   const balloonArena = document.getElementById('balloon-arena');
   const startBalloonBtn = document.getElementById('start-balloon-game');
@@ -240,19 +304,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const balloon = document.createElement('div');
     balloon.className = 'balloon-item';
-    
     const colors = ['#ff4757', '#ffa502', '#2ed573', '#1e90ff', '#9b59b6', '#ff78ae'];
-    const randomColor = colors[Math.floor(Math.random() * colors.length)];
-    balloon.style.backgroundColor = randomColor;
-
-    const emojis = ['🎈', '⭐', '🎁', '🍬', '🦄'];
-    balloon.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+    balloon.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+    balloon.textContent = ['🎈', '⭐', '🎁', '🍬', '🦄'][Math.floor(Math.random() * 5)];
 
     const arenaWidth = balloonArena.clientWidth - 70;
-    const randomX = Math.max(10, Math.floor(Math.random() * arenaWidth));
-    balloon.style.left = `${randomX}px`;
-
-    const floatDuration = Math.random() * 2 + 3; // 3 to 5 seconds float
+    balloon.style.left = `${Math.max(10, Math.floor(Math.random() * arenaWidth))}px`;
+    const floatDuration = Math.random() * 2 + 3;
     balloon.style.animationDuration = `${floatDuration}s`;
 
     balloon.addEventListener('click', (e) => {
@@ -260,19 +318,13 @@ document.addEventListener('DOMContentLoaded', () => {
       popSynthSound();
       gameScore += 10;
       if (gameScoreEl) gameScoreEl.textContent = gameScore;
-
-      // Pop Animation
       balloon.style.transform = 'scale(1.4)';
       balloon.style.opacity = '0';
       setTimeout(() => balloon.remove(), 100);
     });
 
     balloonArena.appendChild(balloon);
-
-    // Auto remove after animation completes
-    setTimeout(() => {
-      if (balloon.parentNode) balloon.remove();
-    }, floatDuration * 1000);
+    setTimeout(() => { if (balloon.parentNode) balloon.remove(); }, floatDuration * 1000);
   }
 
   if (startBalloonBtn) {
@@ -282,19 +334,16 @@ document.addEventListener('DOMContentLoaded', () => {
       gameScore = 0;
       if (gameScoreEl) gameScoreEl.textContent = '0';
       if (gameOverlay) gameOverlay.style.display = 'none';
-
-      // Clear existing balloons
       document.querySelectorAll('.balloon-item').forEach(b => b.remove());
 
       gameInterval = setInterval(spawnBalloon, 700);
 
-      // 30 Seconds timer
       setTimeout(() => {
         clearInterval(gameInterval);
         isGameRunning = false;
         if (gameOverlay) {
           gameOverlay.style.display = 'flex';
-          gameOverlay.querySelector('h3').textContent = `🎉 Game Over! Final Score: ${gameScore}`;
+          gameOverlay.querySelector('h3').textContent = `🎉 Game Over! Score: ${gameScore}`;
         }
         if (gameScore > highScore) {
           highScore = gameScore;
@@ -307,17 +356,16 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // ==========================================================================
-  // SECTION 4: Magic Doodle Canvas Logic
+  // Magic Canvas Logic
   // ==========================================================================
   const canvas = document.getElementById('doodle-canvas');
   if (canvas) {
     const ctx = canvas.getContext('2d');
     let isDrawing = false;
-    let currentMode = 'draw'; // 'draw', 'stamp-star', 'stamp-heart', 'eraser'
+    let currentMode = 'draw';
     let currentColor = '#ff4757';
     let currentSize = 10;
 
-    // Resize canvas internal buffer
     function resizeCanvas() {
       const rect = canvas.getBoundingClientRect();
       canvas.width = rect.width;
@@ -328,25 +376,12 @@ document.addEventListener('DOMContentLoaded', () => {
     resizeCanvas();
     window.addEventListener('resize', resizeCanvas);
 
-    // Color Swatches & Color Picker
     const colorPicker = document.getElementById('brush-color');
-    if (colorPicker) {
-      colorPicker.addEventListener('input', (e) => currentColor = e.target.value);
-    }
-
-    document.querySelectorAll('.color-swatch').forEach(swatch => {
-      swatch.addEventListener('click', () => {
-        currentColor = swatch.dataset.color;
-        if (colorPicker) colorPicker.value = currentColor;
-      });
-    });
+    if (colorPicker) colorPicker.addEventListener('input', (e) => currentColor = e.target.value);
 
     const brushSlider = document.getElementById('brush-size');
-    if (brushSlider) {
-      brushSlider.addEventListener('input', (e) => currentSize = e.target.value);
-    }
+    if (brushSlider) brushSlider.addEventListener('input', (e) => currentSize = e.target.value);
 
-    // Tool Switchers
     const btnDraw = document.getElementById('tool-draw');
     const btnStar = document.getElementById('tool-stamp-star');
     const btnHeart = document.getElementById('tool-stamp-heart');
@@ -363,28 +398,22 @@ document.addEventListener('DOMContentLoaded', () => {
     if (btnStar) btnStar.addEventListener('click', () => setToolActive(btnStar, 'stamp-star'));
     if (btnHeart) btnHeart.addEventListener('click', () => setToolActive(btnHeart, 'stamp-heart'));
     if (btnEraser) btnEraser.addEventListener('click', () => setToolActive(btnEraser, 'eraser'));
-
-    if (btnClear) {
-      btnClear.addEventListener('click', () => {
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-      });
-    }
+    if (btnClear) btnClear.addEventListener('click', () => ctx.clearRect(0, 0, canvas.width, canvas.height));
 
     function getPos(e) {
       const rect = canvas.getBoundingClientRect();
       const clientX = e.touches ? e.touches[0].clientX : e.clientX;
       const clientY = e.touches ? e.touches[0].clientY : e.clientY;
-      return {
-        x: clientX - rect.left,
-        y: clientY - rect.top
-      };
+      return { x: clientX - rect.left, y: clientY - rect.top };
     }
 
     function startDraw(e) {
       isDrawing = true;
       const pos = getPos(e);
       if (currentMode === 'stamp-star' || currentMode === 'stamp-heart') {
-        drawStamp(pos.x, pos.y, currentMode);
+        ctx.font = `${currentSize * 3}px serif`;
+        ctx.textAlign = 'center';
+        ctx.fillText(currentMode === 'stamp-star' ? '⭐' : '❤️', pos.x, pos.y);
         isDrawing = false;
         return;
       }
@@ -396,128 +425,21 @@ document.addEventListener('DOMContentLoaded', () => {
       if (!isDrawing) return;
       e.preventDefault();
       const pos = getPos(e);
-
-      if (currentMode === 'eraser') {
-        ctx.strokeStyle = '#ffffff';
-        ctx.lineWidth = currentSize * 2;
-      } else {
-        ctx.strokeStyle = currentColor;
-        ctx.lineWidth = currentSize;
-      }
-
+      ctx.strokeStyle = currentMode === 'eraser' ? '#ffffff' : currentColor;
+      ctx.lineWidth = currentMode === 'eraser' ? currentSize * 2 : currentSize;
       ctx.lineTo(pos.x, pos.y);
       ctx.stroke();
     }
 
-    function stopDraw() {
-      isDrawing = false;
-    }
-
-    function drawStamp(x, y, mode) {
-      ctx.font = `${currentSize * 3}px serif`;
-      ctx.textAlign = 'center';
-      ctx.textBaseline = 'middle';
-      const emoji = mode === 'stamp-star' ? '⭐' : '❤️';
-      ctx.fillText(emoji, x, y);
-    }
-
     canvas.addEventListener('mousedown', startDraw);
     canvas.addEventListener('mousemove', draw);
-    canvas.addEventListener('mouseup', stopDraw);
-    canvas.addEventListener('mouseleave', stopDraw);
-
+    canvas.addEventListener('mouseup', () => isDrawing = false);
     canvas.addEventListener('touchstart', startDraw, { passive: false });
     canvas.addEventListener('touchmove', draw, { passive: false });
-    canvas.addEventListener('touchend', stopDraw);
+    canvas.addEventListener('touchend', () => isDrawing = false);
   }
 
-  // ==========================================================================
-  // SECTION 5: Quiz Game Logic
-  // ==========================================================================
-  const quizQuestions = [
-    {
-      q: "How many legs does a cute puppy 🐶 have?",
-      opts: ["2", "4", "6", "8"],
-      ans: "4",
-      speech: "How many legs does a puppy have?"
-    },
-    {
-      q: "What color is the bright sun ☀️ in the sky?",
-      opts: ["Blue", "Green", "Yellow", "Purple"],
-      ans: "Yellow",
-      speech: "What color is the bright sun in the sky?"
-    },
-    {
-      q: "Which animal says 'QUACK QUACK'? 🦆",
-      opts: ["Duck", "Lion", "Cat", "Frog"],
-      ans: "Duck",
-      speech: "Which animal says quack quack?"
-    },
-    {
-      q: "What shape is a delicious round pizza 🍕?",
-      opts: ["Square", "Circle", "Triangle", "Star"],
-      ans: "Circle",
-      speech: "What shape is a delicious round pizza?"
-    },
-    {
-      q: "If you have 2 apples 🍎 and get 1 more, how many apples do you have?",
-      opts: ["1", "2", "3", "5"],
-      ans: "3",
-      speech: "If you have 2 apples and get 1 more, how many apples do you have?"
-    }
-  ];
-
-  let currentQuizIdx = 0;
-  const qNum = document.getElementById('quiz-num');
-  const qTitle = document.getElementById('quiz-question');
-  const qOptsContainer = document.getElementById('quiz-options');
-  const qFeedback = document.getElementById('quiz-feedback');
-
-  function renderQuiz() {
-    if (!qTitle || !qOptsContainer) return;
-    const q = quizQuestions[currentQuizIdx];
-    if (qNum) qNum.textContent = currentQuizIdx + 1;
-    qTitle.textContent = q.q;
-    qOptsContainer.innerHTML = '';
-    if (qFeedback) qFeedback.className = 'quiz-feedback hidden';
-
-    speakText(q.speech);
-
-    q.opts.forEach(opt => {
-      const btn = document.createElement('button');
-      btn.className = 'quiz-opt-btn';
-      btn.textContent = opt;
-      btn.addEventListener('click', () => checkAnswer(opt, q.ans));
-      qOptsContainer.appendChild(btn);
-    });
-  }
-
-  function checkAnswer(selected, correct) {
-    if (!qFeedback) return;
-    qFeedback.classList.remove('hidden');
-
-    if (selected === correct) {
-      qFeedback.textContent = '🌟 Correct! Awesome Job! (+1 Star)';
-      qFeedback.className = 'quiz-feedback correct';
-      speakText("Awesome job! You got it right!");
-      addStars(1);
-
-      setTimeout(() => {
-        currentQuizIdx = (currentQuizIdx + 1) % quizQuestions.length;
-        renderQuiz();
-      }, 1800);
-    } else {
-      qFeedback.textContent = '❌ Oops! Try again, super star!';
-      qFeedback.className = 'quiz-feedback wrong';
-      speakText("Oops! Try again!");
-    }
-  }
-
-  renderQuiz();
-
-  // ==========================================================================
-  // Confetti Particle Generator
-  // ==========================================================================
+  // Confetti Animation
   function triggerConfetti() {
     const confettiCanvas = document.getElementById('confetti-canvas');
     if (!confettiCanvas) return;
@@ -527,46 +449,27 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const particles = [];
     const colors = ['#ff4757', '#ffa502', '#2ed573', '#1e90ff', '#9b59b6', '#ff78ae'];
-
     for (let i = 0; i < 60; i++) {
       particles.push({
-        x: window.innerWidth / 2,
-        y: window.innerHeight / 2,
-        vx: (Math.random() - 0.5) * 12,
-        vy: (Math.random() - 0.7) * 12,
-        size: Math.random() * 8 + 4,
-        color: colors[Math.floor(Math.random() * colors.length)],
-        life: 1
+        x: window.innerWidth / 2, y: window.innerHeight / 2,
+        vx: (Math.random() - 0.5) * 12, vy: (Math.random() - 0.7) * 12,
+        size: Math.random() * 8 + 4, color: colors[Math.floor(Math.random() * colors.length)], life: 1
       });
     }
 
     function renderParticles() {
       ctx.clearRect(0, 0, confettiCanvas.width, confettiCanvas.height);
       let alive = false;
-
       particles.forEach(p => {
         if (p.life > 0) {
-          alive = true;
-          p.x += p.vx;
-          p.y += p.vy;
-          p.vy += 0.3; // gravity
-          p.life -= 0.02;
-
-          ctx.fillStyle = p.color;
-          ctx.globalAlpha = p.life;
-          ctx.beginPath();
-          ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
-          ctx.fill();
+          alive = true; p.x += p.vx; p.y += p.vy; p.vy += 0.3; p.life -= 0.02;
+          ctx.fillStyle = p.color; ctx.globalAlpha = p.life;
+          ctx.beginPath(); ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2); ctx.fill();
         }
       });
-
-      if (alive) {
-        requestAnimationFrame(renderParticles);
-      } else {
-        ctx.clearRect(0, 0, confettiCanvas.width, confettiCanvas.height);
-      }
+      if (alive) requestAnimationFrame(renderParticles);
+      else ctx.clearRect(0, 0, confettiCanvas.width, confettiCanvas.height);
     }
-
     renderParticles();
   }
 });
