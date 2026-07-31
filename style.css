@@ -539,15 +539,109 @@ body {
 .buddy-emoji { font-size: 2.8rem; margin: 8px 0; }
 .buddy-card h4 { font-family: var(--font-heading); font-size: 0.95rem; color: #334155; }
 
-/* PLAY ZONE TOYS */
-.toy-card {
-  background: #f8fafc;
-  border-radius: var(--radius-md);
-  padding: 24px;
-  margin-bottom: 32px;
-  border: 2px solid #e2e8f0;
+/* Piano Keyboard Layout */
+.piano-toy-card {
+  text-align: center;
 }
-.toy-card h3 { font-family: var(--font-heading); font-size: 1.5rem; margin-bottom: 8px; }
+
+.piano-keyboard-wrapper {
+  display: flex;
+  justify-content: center;
+  margin: 24px 0;
+  overflow-x: auto;
+  padding: 10px;
+}
+
+.piano-keyboard {
+  position: relative;
+  display: flex;
+  background: #1e293b;
+  padding: 16px 20px 8px 20px;
+  border-radius: 16px;
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.2), inset 0 2px 4px rgba(255, 255, 255, 0.2);
+  border: 4px solid #0f172a;
+}
+
+.piano-key {
+  position: relative;
+  cursor: pointer;
+  user-select: none;
+  transition: all 0.1s ease;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: center;
+  padding-bottom: 12px;
+}
+
+/* White Piano Keys */
+.white-key {
+  width: 54px;
+  height: 200px;
+  background: linear-gradient(180deg, #ffffff 0%, #f8fafc 85%, #e2e8f0 100%);
+  border: 2px solid #cbd5e1;
+  border-radius: 0 0 10px 10px;
+  z-index: 1;
+  margin: 0 2px;
+  box-shadow: inset 0 -8px 0 var(--key-color, #cbd5e1), 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.white-key:hover {
+  background: linear-gradient(180deg, #ffffff 0%, #f1f5f9 100%);
+  box-shadow: inset 0 -14px 0 var(--key-color, #cbd5e1), 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+.white-key.active, .white-key:active {
+  transform: translateY(4px);
+  background: var(--key-color, #e2e8f0) !important;
+  box-shadow: inset 0 -4px 0 rgba(0, 0, 0, 0.2);
+}
+
+.white-key.active .key-label, .white-key:active .key-label {
+  color: #fff !important;
+}
+
+/* Black Piano Keys */
+.black-key {
+  width: 34px;
+  height: 120px;
+  background: linear-gradient(180deg, #334155 0%, #0f172a 100%);
+  border: 2px solid #020617;
+  border-radius: 0 0 6px 6px;
+  z-index: 2;
+  margin-left: -19px;
+  margin-right: -19px;
+  box-shadow: 0 6px 10px rgba(0, 0, 0, 0.4), inset 0 2px 2px rgba(255, 255, 255, 0.2);
+}
+
+.black-key:hover {
+  background: linear-gradient(180deg, #475569 0%, #1e293b 100%);
+}
+
+.black-key.active, .black-key:active {
+  transform: translateY(3px);
+  background: #ff4757 !important;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
+}
+
+.key-label {
+  font-family: var(--font-heading);
+  font-weight: 700;
+  font-size: 1rem;
+  color: #334155;
+  line-height: 1.1;
+  text-align: center;
+}
+
+.black-key .key-label {
+  color: #cbd5e1;
+  font-size: 0.75rem;
+  padding-bottom: 4px;
+}
+
+.piano-controls {
+  margin-top: 16px;
+}
 
 /* PRICING GRID */
 .pricing-grid {

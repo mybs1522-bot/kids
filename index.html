@@ -490,21 +490,59 @@
           <p>Try out our live music, balloon popping, and doodle tools!</p>
         </div>
 
-        <!-- Toy 1: Rainbow Xylophone -->
-        <div id="xylophone" class="toy-card">
-          <h3>🎵 Rainbow Xylophone</h3>
-          <p>Click keys to play musical notes or auto-play Twinkle Twinkle!</p>
-          <div class="xylophone-container">
-            <div class="xylophone-bar bar-c" data-note="C4"><span class="note-label">C</span></div>
-            <div class="xylophone-bar bar-d" data-note="D4"><span class="note-label">D</span></div>
-            <div class="xylophone-bar bar-e" data-note="E4"><span class="note-label">E</span></div>
-            <div class="xylophone-bar bar-f" data-note="F4"><span class="note-label">F</span></div>
-            <div class="xylophone-bar bar-g" data-note="G4"><span class="note-label">G</span></div>
-            <div class="xylophone-bar bar-a" data-note="A4"><span class="note-label">A</span></div>
-            <div class="xylophone-bar bar-b" data-note="B4"><span class="note-label">B</span></div>
-            <div class="xylophone-bar bar-c2" data-note="C5"><span class="note-label">C2</span></div>
+        <!-- Toy 1: Rainbow Magic Piano Keyboard -->
+        <div id="xylophone" class="toy-card piano-toy-card">
+          <h3>🎹 Rainbow Magic Piano Keyboard</h3>
+          <p>Tap the colorful piano keys or press your computer keyboard keys (A, S, D, F, G, H, J, K / W, E, T, Y, U) to play music!</p>
+          
+          <div class="piano-keyboard-wrapper">
+            <div class="piano-keyboard">
+              <!-- White Keys & Black Keys -->
+              <div class="piano-key white-key key-c" data-note="C4" data-key="A" style="--key-color:#ff4757">
+                <span class="key-label">C<br><small>(A)</small></span>
+              </div>
+              <div class="piano-key black-key key-cs" data-note="C#4" data-key="W">
+                <span class="key-label">C#<br><small>(W)</small></span>
+              </div>
+              <div class="piano-key white-key key-d" data-note="D4" data-key="S" style="--key-color:#ffa502">
+                <span class="key-label">D<br><small>(S)</small></span>
+              </div>
+              <div class="piano-key black-key key-ds" data-note="D#4" data-key="E">
+                <span class="key-label">D#<br><small>(E)</small></span>
+              </div>
+              <div class="piano-key white-key key-e" data-note="E4" data-key="D" style="--key-color:#2ed573">
+                <span class="key-label">E<br><small>(D)</small></span>
+              </div>
+              <div class="piano-key white-key key-f" data-note="F4" data-key="F" style="--key-color:#1e90ff">
+                <span class="key-label">F<br><small>(F)</small></span>
+              </div>
+              <div class="piano-key black-key key-fs" data-note="F#4" data-key="T">
+                <span class="key-label">F#<br><small>(T)</small></span>
+              </div>
+              <div class="piano-key white-key key-g" data-note="G4" data-key="G" style="--key-color:#3742fa">
+                <span class="key-label">G<br><small>(G)</small></span>
+              </div>
+              <div class="piano-key black-key key-gs" data-note="G#4" data-key="Y">
+                <span class="key-label">G#<br><small>(Y)</small></span>
+              </div>
+              <div class="piano-key white-key key-a" data-note="A4" data-key="H" style="--key-color:#9b59b6">
+                <span class="key-label">A<br><small>(H)</small></span>
+              </div>
+              <div class="piano-key black-key key-as" data-note="A#4" data-key="U">
+                <span class="key-label">A#<br><small>(U)</small></span>
+              </div>
+              <div class="piano-key white-key key-b" data-note="B4" data-key="J" style="--key-color:#ff78ae">
+                <span class="key-label">B<br><small>(J)</small></span>
+              </div>
+              <div class="piano-key white-key key-c2" data-note="C5" data-key="K" style="--key-color:#ff6b81">
+                <span class="key-label">C2<br><small>(K)</small></span>
+              </div>
+            </div>
           </div>
-          <button class="btn btn-outline" id="play-song-btn">🎼 Play "Twinkle Twinkle Little Star"</button>
+
+          <div class="piano-controls">
+            <button class="btn btn-outline" id="play-song-btn">🎼 Auto-Play "Twinkle Twinkle Little Star"</button>
+          </div>
         </div>
 
         <!-- Toy 2: Balloon Pop Game -->

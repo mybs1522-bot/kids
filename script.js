@@ -203,11 +203,28 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // ==========================================================================
-  // Xylophone Logic
+  // Piano Keyboard Logic (White Keys & Black Keys)
   // ==========================================================================
   const noteFrequencies = {
-    'C4': 261.63, 'D4': 293.66, 'E4': 329.63, 'F4': 349.23,
-    'G4': 392.00, 'A4': 440.00, 'B4': 493.88, 'C5': 523.25
+    'C4': 261.63,
+    'C#4': 277.18,
+    'D4': 293.66,
+    'D#4': 311.13,
+    'E4': 329.63,
+    'F4': 349.23,
+    'F#4': 369.99,
+    'G4': 392.00,
+    'G#4': 415.30,
+    'A4': 440.00,
+    'A#4': 466.16,
+    'B4': 493.88,
+    'C5': 523.25
+  };
+
+  const keyToNoteMap = {
+    'a': 'C4', 'w': 'C#4', 's': 'D4', 'e': 'D#4', 'd': 'E4',
+    'f': 'F4', 't': 'F#4', 'g': 'G4', 'y': 'G#4', 'h': 'A4',
+    'u': 'A#4', 'j': 'B4', 'k': 'C5'
   };
 
   function playNote(freq, duration = 0.6) {
@@ -227,16 +244,31 @@ document.addEventListener('DOMContentLoaded', () => {
     osc.stop(ctx.currentTime + duration);
   }
 
-  const xyloBars = document.querySelectorAll('.xylophone-bar');
-  xyloBars.forEach(bar => {
-    bar.addEventListener('click', () => {
-      const note = bar.dataset.note;
+  const pianoKeys = document.querySelectorAll('.piano-key');
+  pianoKeys.forEach(keyEl => {
+    keyEl.addEventListener('click', () => {
+      const note = keyEl.dataset.note;
       if (noteFrequencies[note]) {
         playNote(noteFrequencies[note]);
-        bar.classList.add('active');
-        setTimeout(() => bar.classList.remove('active'), 150);
+        keyEl.classList.add('active');
+        setTimeout(() => keyEl.classList.remove('active'), 180);
       }
     });
+  });
+
+  // Physical Keyboard Shortcuts (A, S, D, F, G, H, J, K / W, E, T, Y, U)
+  document.addEventListener('keydown', (e) => {
+    if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
+    const key = e.key.toLowerCase();
+    const note = keyToNoteMap[key];
+    if (note && noteFrequencies[note]) {
+      const keyEl = document.querySelector(`.piano-key[data-note="${note}"]`);
+      if (keyEl) {
+        playNote(noteFrequencies[note]);
+        keyEl.classList.add('active');
+        setTimeout(() => keyEl.classList.remove('active'), 180);
+      }
+    }
   });
 
   const songBtn = document.getElementById('play-song-btn');
@@ -250,16 +282,16 @@ document.addEventListener('DOMContentLoaded', () => {
       songBtn.textContent = '🎶 Playing Song...';
 
       for (let note of twinkleSong) {
-        const bar = document.querySelector(`.xylophone-bar[data-note="${note}"]`);
-        if (bar) {
+        const keyEl = document.querySelector(`.piano-key[data-note="${note}"]`);
+        if (keyEl && noteFrequencies[note]) {
           playNote(noteFrequencies[note], 0.5);
-          bar.classList.add('active');
-          setTimeout(() => bar.classList.remove('active'), 200);
+          keyEl.classList.add('active');
+          setTimeout(() => keyEl.classList.remove('active'), 200);
         }
         await new Promise(res => setTimeout(res, 450));
       }
 
-      songBtn.textContent = '🎼 Play "Twinkle Twinkle Little Star"';
+      songBtn.textContent = '🎼 Auto-Play "Twinkle Twinkle Little Star"';
       isPlayingSong = false;
       addStars(2);
     });
