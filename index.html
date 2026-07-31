@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Kids Playland & Learning Zone - Interactive games, musical xylophone, animal sounds, balloon popping, doodle canvas and fun quizzes for children!">
+  <meta name="keywords" content="kids, learning, games, xylophone, drawing canvas, educational toys, children activities">
+  <title>Kids Playland & Fun Learning Zone 🎈 Play, Learn & Discover!</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600;700&family=Quicksand:wght@500;700&family=Bubblegum+Sans&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- Floating background decorations -->
+  <div class="cloud cloud-1">☁️</div>
+  <div class="cloud cloud-2">☁️</div>
+  <div class="cloud cloud-3">☁️</div>
+  <div class="star star-1">✨</div>
+  <div class="star star-2">🌟</div>
+  <div class="star star-3">⭐</div>
+
+  <!-- Top Navigation Header -->
+  <header class="navbar">
+    <div class="logo">
+      <span class="logo-icon">🦄</span>
+      <span class="logo-text">Kids<span class="highlight">Playland</span></span>
+    </div>
+    <nav class="nav-links">
+      <a href="#xylophone" class="nav-btn btn-yellow">🎵 Music</a>
+      <a href="#animals" class="nav-btn btn-pink">🦁 Animals</a>
+      <a href="#balloons" class="nav-btn btn-blue">🎈 Balloon Pop</a>
+      <a href="#canvas" class="nav-btn btn-green">🎨 Magic Draw</a>
+      <a href="#quiz" class="nav-btn btn-purple">🧠 Fun Quiz</a>
+    </nav>
+    <div class="star-counter">
+      <span class="star-icon">⭐</span>
+      <span id="star-score">0</span> Stars
+    </div>
+  </header>
+
+  <main class="container">
+    <!-- Hero Section -->
+    <section class="hero-section">
+      <div class="hero-content">
+        <span class="badge">🎉 Welcome Young Explorer!</span>
+        <h1 class="hero-title">Learn, Play & Discover<br><span class="gradient-text">A Magical World!</span></h1>
+        <p class="hero-subtext">Play real musical instruments, meet adorable animal friends, pop colorful balloons, draw magic art, and collect shiny reward stars!</p>
+        <div class="hero-buttons">
+          <button class="btn btn-primary btn-bounce" id="btn-explore">🚀 Start Playing Now!</button>
+          <button class="btn btn-secondary" id="btn-say-hello">🔊 Voice Welcome</button>
+        </div>
+      </div>
+      <div class="hero-media">
+        <div class="image-frame">
+          <img src="assets/hero.jpg" alt="Kids Playground Wonderland" class="hero-img">
+          <div class="floating-badge badge-top-right">🌈 Endless Fun!</div>
+          <div class="floating-badge badge-bottom-left">🎨 100% Kid Safe</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 1: Rainbow Musical Xylophone -->
+    <section id="xylophone" class="card-section section-xylophone">
+      <div class="section-header">
+        <span class="section-tag">🎵 Musical Magic</span>
+        <h2>Rainbow Xylophone</h2>
+        <p>Click or tap the colorful bars to play beautiful musical notes!</p>
+      </div>
+
+      <div class="xylophone-container">
+        <div class="xylophone-bar bar-c" data-note="C4" data-color="#ff4757">
+          <span class="note-label">C</span>
+          <span class="note-name">Do</span>
+        </div>
+        <div class="xylophone-bar bar-d" data-note="D4" data-color="#ffa502">
+          <span class="note-label">D</span>
+          <span class="note-name">Re</span>
+        </div>
+        <div class="xylophone-bar bar-e" data-note="E4" data-color="#2ed573">
+          <span class="note-label">E</span>
+          <span class="note-name">Mi</span>
+        </div>
+        <div class="xylophone-bar bar-f" data-note="F4" data-color="#1e90ff">
+          <span class="note-label">F</span>
+          <span class="note-name">Fa</span>
+        </div>
+        <div class="xylophone-bar bar-g" data-note="G4" data-color="#3742fa">
+          <span class="note-label">G</span>
+          <span class="note-name">Sol</span>
+        </div>
+        <div class="xylophone-bar bar-a" data-note="A4" data-color="#9b59b6">
+          <span class="note-label">A</span>
+          <span class="note-name">La</span>
+        </div>
+        <div class="xylophone-bar bar-b" data-note="B4" data-color="#ff78ae">
+          <span class="note-label">B</span>
+          <span class="note-name">Ti</span>
+        </div>
+        <div class="xylophone-bar bar-c2" data-note="C5" data-color="#ff6b81">
+          <span class="note-label">C2</span>
+          <span class="note-name">Do</span>
+        </div>
+      </div>
+      <div class="music-controls">
+        <button class="btn btn-outline" id="play-song-btn">🎼 Play "Twinkle Twinkle Little Star"</button>
+      </div>
+    </section>
+
+    <!-- SECTION 2: Interactive Animal Sound Cards -->
+    <section id="animals" class="card-section section-animals">
+      <div class="section-header">
+        <span class="section-tag">🦁 Safari Adventure</span>
+        <h2>Meet Our Cute Animal Friends!</h2>
+        <p>Click any animal card to hear their roar, quack, or sound and learn a fun fact!</p>
+      </div>
+
+      <div class="animal-grid">
+        <div class="animal-card" data-name="Lion" data-sound="roar" data-fact="Lions are known as the King of the Jungle!">
+          <div class="animal-emoji">🦁</div>
+          <h3>Mighty Lion</h3>
+          <span class="animal-sound-label">Says: "ROAR!"</span>
+          <button class="btn-sound">🔊 Hear Sound</button>
+        </div>
+
+        <div class="animal-card" data-name="Elephant" data-sound="trumpet" data-fact="Elephants use their trunk to spray water and hug friends!">
+          <div class="animal-emoji">🐘</div>
+          <h3>Friendly Elephant</h3>
+          <span class="animal-sound-label">Says: "PAWOO!"</span>
+          <button class="btn-sound">🔊 Hear Sound</button>
+        </div>
+
+        <div class="animal-card" data-name="Monkey" data-sound="screech" data-fact="Monkeys love swinging on trees and eating yummy bananas!">
+          <div class="animal-emoji">🐒</div>
+          <h3>Playful Monkey</h3>
+          <span class="animal-sound-label">Says: "OOH OOH AH AH!"</span>
+          <button class="btn-sound">🔊 Hear Sound</button>
+        </div>
+
+        <div class="animal-card" data-name="Duck" data-sound="quack" data-fact="Ducks have waterproof feathers to keep them warm while swimming!">
+          <div class="animal-emoji">🦆</div>
+          <h3>Dapper Duck</h3>
+          <span class="animal-sound-label">Says: "QUACK QUACK!"</span>
+          <button class="btn-sound">🔊 Hear Sound</button>
+        </div>
+
+        <div class="animal-card" data-name="Frog" data-sound="ribbit" data-fact="Frogs can jump up to 20 times their own body length!">
+          <div class="animal-emoji">🐸</div>
+          <h3>Jumping Frog</h3>
+          <span class="animal-sound-label">Says: "RIBBIT RIBBIT!"</span>
+          <button class="btn-sound">🔊 Hear Sound</button>
+        </div>
+
+        <div class="animal-card" data-name="Owl" data-sound="hoot" data-fact="Owls can rotate their heads almost all the way around!">
+          <div class="animal-emoji">🦉</div>
+          <h3>Wise Owl</h3>
+          <span class="animal-sound-label">Says: "HOOT HOOT!"</span>
+          <button class="btn-sound">🔊 Hear Sound</button>
+        </div>
+      </div>
+      <div id="animal-fact-box" class="fact-box hidden">
+        <span class="fact-icon">💡</span>
+        <p id="fact-text">Select an animal to hear a fun fact!</p>
+      </div>
+    </section>
+
+    <!-- SECTION 3: Pop the Balloons Game -->
+    <section id="balloons" class="card-section section-balloons">
+      <div class="section-header">
+        <span class="section-tag">🎈 Arcade Fun</span>
+        <h2>Pop the Floating Balloons!</h2>
+        <p>Balloons are floating up into the sky! Tap or click them to pop before they float away!</p>
+      </div>
+
+      <div class="game-dashboard">
+        <div class="score-card">Score: <span id="game-score">0</span></div>
+        <div class="score-card">High Score: <span id="high-score">0</span></div>
+        <button class="btn btn-primary" id="start-balloon-game">▶️ Start Game</button>
+      </div>
+
+      <div id="balloon-arena" class="balloon-arena">
+        <div class="start-overlay" id="game-overlay">
+          <h3>Press Start to Pop Balloons!</h3>
+          <p>Catch as many floating balloons as you can in 30 seconds!</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 4: Magic Doodle & Coloring Canvas -->
+    <section id="canvas" class="card-section section-canvas">
+      <div class="section-header">
+        <span class="section-tag">🎨 Creative Corner</span>
+        <h2>Magic Doodle Studio</h2>
+        <p>Draw rainbow artwork, stamp stars and hearts, and let your imagination fly!</p>
+      </div>
+
+      <div class="canvas-wrapper">
+        <div class="canvas-toolbar">
+          <div class="tool-group">
+            <label>Color:</label>
+            <input type="color" id="brush-color" value="#ff4757">
+            <button class="color-swatch" style="background:#ff4757" data-color="#ff4757"></button>
+            <button class="color-swatch" style="background:#ffa502" data-color="#ffa502"></button>
+            <button class="color-swatch" style="background:#2ed573" data-color="#2ed573"></button>
+            <button class="color-swatch" style="background:#1e90ff" data-color="#1e90ff"></button>
+            <button class="color-swatch" style="background:#9b59b6" data-color="#9b59b6"></button>
+          </div>
+
+          <div class="tool-group">
+            <label>Brush Size:</label>
+            <input type="range" id="brush-size" min="4" max="30" value="10">
+          </div>
+
+          <div class="tool-group">
+            <button class="btn-tool active" id="tool-draw">✏️ Draw</button>
+            <button class="btn-tool" id="tool-stamp-star">⭐ Star</button>
+            <button class="btn-tool" id="tool-stamp-heart">❤️ Heart</button>
+            <button class="btn-tool" id="tool-eraser">🧹 Eraser</button>
+            <button class="btn-tool btn-danger" id="tool-clear">🗑️ Clear Canvas</button>
+          </div>
+        </div>
+
+        <canvas id="doodle-canvas" width="800" height="450"></canvas>
+      </div>
+    </section>
+
+    <!-- SECTION 5: Kids Fun Quiz Challenge -->
+    <section id="quiz" class="card-section section-quiz">
+      <div class="section-header">
+        <span class="section-tag">🧠 Brain Teaser</span>
+        <h2>Kids Smart Quiz</h2>
+        <p>Answer fun questions to earn bonus star trophies!</p>
+      </div>
+
+      <div id="quiz-card" class="quiz-card">
+        <div class="quiz-progress">Question <span id="quiz-num">1</span> of 5</div>
+        <h3 id="quiz-question" class="quiz-question">Loading question...</h3>
+
+        <div id="quiz-options" class="quiz-options">
+          <!-- Quiz options generated dynamically -->
+        </div>
+
+        <div id="quiz-feedback" class="quiz-feedback hidden"></div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-content">
+      <div class="footer-brand">
+        <span>🦄 Kids Playland & Fun Learning Zone</span>
+      </div>
+      <p>Made with ❤️ for kids of all ages. Safe, interactive, and fun!</p>
+      <p class="copyright">&copy; 2026 Kids Playland. Built with HTML5, CSS3 & JavaScript Web Audio.</p>
+    </div>
+  </footer>
+
+  <!-- Confetti Canvas Container -->
+  <canvas id="confetti-canvas"></canvas>
+
+  <script src="script.js"></script>
+</body>
+</html>
