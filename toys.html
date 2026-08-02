@@ -2,6 +2,13 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
+  <script>
+    if (window.location.pathname.includes('/new') && !window.location.pathname.endsWith('/')) {
+      if (!window.location.pathname.endsWith('.html')) {
+        window.location.replace(window.location.pathname + '/' + window.location.search + window.location.hash);
+      }
+    }
+  </script>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="TinySparks Interactive Kids Toys - Play the Rainbow Piano, Pop Balloons in the Circular Arena, and Draw in the Magic Doodle Studio!">
   <title>TinySparks Interactive Play Zone 🎮 Free Kids Toys & Games</title>

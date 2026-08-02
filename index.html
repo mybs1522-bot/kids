@@ -2,6 +2,13 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
+  <script>
+    if (window.location.pathname === '/new' || window.location.pathname.endsWith('/new')) {
+      if (!window.location.pathname.endsWith('/')) {
+        window.location.replace(window.location.pathname + '/' + window.location.search + window.location.hash);
+      }
+    }
+  </script>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="TinySparks Pre-Schooler Worksheet Bundle - 500+ printable activities for toddlers aged 2+. Letters, numbers, shapes, colors & body parts. Designed by a mom for screen-free play-based learning!">
   <meta name="keywords" content="preschool worksheets, toddler activities, printable learning kit, 20 week curriculum, screen free learning">
