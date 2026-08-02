@@ -1,5 +1,5 @@
 /* ==========================================================================
-   TinySparks Pre-Schoolers Learning - Modern Funky Interactive Logic
+   AvadaLearn Kids - Modern Funky Interactive Logic
    ========================================================================== */
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -198,7 +198,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const btnSayHello = document.getElementById('btn-say-hello');
   if (btnSayHello) {
     btnSayHello.addEventListener('click', () => {
-      speakText("Welcome to TinySparks! Discover our 20-week printable master plan for fun, screen-free learning!");
+      speakText("Welcome to AvadaLearn Kids! Discover our 20-week printable master plan for fun, screen-free learning!");
     });
   }
 
