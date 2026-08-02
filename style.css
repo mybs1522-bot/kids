@@ -575,41 +575,6 @@ body {
 }
 
 /* White Piano Keys */
-/* Circular Balloon Arena Dome */
-.circular-balloon-toy {
-  text-align: center;
-}
-
-.circular-arena-wrapper {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 20px 0;
-}
-
-.balloon-arena-circular {
-  position: relative;
-  width: 420px;
-  height: 420px;
-  max-width: 90vw;
-  max-height: 90vw;
-  border-radius: 50%;
-  background: radial-gradient(circle at 35% 35%, #ffffff 0%, #e0f2fe 50%, #bae6fd 100%);
-  border: 10px solid #ffffff;
-  box-shadow: 0 16px 36px rgba(0, 0, 0, 0.15), inset 0 10px 20px rgba(255, 255, 255, 0.8), inset 0 -10px 20px rgba(14, 165, 233, 0.2);
-  overflow: hidden;
-  margin: 0 auto;
-}
-
-.balloon-arena {
-  position: relative;
-  height: 400px;
-  background: linear-gradient(180deg, #bae6fd 0%, #e0f2fe 100%);
-  border-radius: var(--radius-md);
-  border: 4px solid #fff;
-  overflow: hidden;
-  box-shadow: inset 0 4px 12px rgba(0,0,0,0.06);
-}
 .white-key {
   width: 54px;
   height: 200px;
@@ -676,6 +641,170 @@ body {
 
 .piano-controls {
   margin-top: 16px;
+}
+
+/* Circular Balloon Arena Dome */
+.circular-balloon-toy {
+  text-align: center;
+}
+
+.circular-arena-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px 0;
+}
+
+.balloon-arena-circular {
+  position: relative;
+  width: 420px;
+  height: 420px;
+  max-width: 90vw;
+  max-height: 90vw;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 35%, #ffffff 0%, #e0f2fe 50%, #bae6fd 100%);
+  border: 10px solid #ffffff;
+  box-shadow: 0 16px 36px rgba(0, 0, 0, 0.15), inset 0 10px 20px rgba(255, 255, 255, 0.8), inset 0 -10px 20px rgba(14, 165, 233, 0.2);
+  overflow: hidden;
+  margin: 0 auto;
+}
+
+.balloon-arena {
+  position: relative;
+  height: 400px;
+  background: linear-gradient(180deg, #bae6fd 0%, #e0f2fe 100%);
+  border-radius: var(--radius-md);
+  border: 4px solid #fff;
+  overflow: hidden;
+  box-shadow: inset 0 4px 12px rgba(0,0,0,0.06);
+}
+
+.balloon-item {
+  position: absolute;
+  width: 60px;
+  height: 75px;
+  border-radius: 50% 50% 50% 50% / 40% 40% 60% 60%;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.5rem;
+  user-select: none;
+  box-shadow: inset -6px -6px 12px rgba(0,0,0,0.15);
+  animation: floatUp linear forwards;
+}
+
+.balloon-item::after {
+  content: '';
+  position: absolute;
+  bottom: -12px;
+  width: 2px;
+  height: 14px;
+  background: rgba(0,0,0,0.3);
+}
+
+@keyframes floatUp {
+  0% { transform: translateY(420px) rotate(0deg); }
+  100% { transform: translateY(-100px) rotate(15deg); }
+}
+
+.game-dashboard {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 24px;
+  margin-bottom: 20px;
+}
+
+.score-card {
+  background: #fef3c7;
+  border: 2px solid #fde047;
+  padding: 10px 20px;
+  border-radius: var(--radius-pill);
+  font-family: var(--font-heading);
+  font-weight: 700;
+  font-size: 1.2rem;
+  color: #b45309;
+}
+
+.start-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(4px);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 20px;
+  z-index: 10;
+}
+
+.start-overlay h3 {
+  font-family: var(--font-heading);
+  font-size: 1.8rem;
+  color: var(--text-dark);
+  margin-bottom: 8px;
+}
+
+/* Canvas Studio */
+.canvas-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+}
+
+.canvas-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 16px;
+  background: #f8fafc;
+  padding: 12px 24px;
+  border-radius: var(--radius-pill);
+  border: 2px solid #e2e8f0;
+}
+
+.btn-tool {
+  font-family: var(--font-heading);
+  font-weight: 600;
+  padding: 8px 14px;
+  border-radius: var(--radius-pill);
+  border: 2px solid #cbd5e1;
+  background: #fff;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btn-tool.active, .btn-tool:hover {
+  background: #1e90ff;
+  color: #fff;
+  border-color: #1e90ff;
+}
+
+.btn-danger {
+  background: #fff1f2;
+  color: #e11d48;
+  border-color: #fecdd3;
+}
+
+.btn-danger:hover {
+  background: #e11d48;
+  color: #fff;
+}
+
+#doodle-canvas {
+  width: 100%;
+  max-width: 800px;
+  height: 400px;
+  background: #ffffff;
+  border-radius: var(--radius-md);
+  border: 4px solid #cbd5e1;
+  box-shadow: var(--shadow-sm);
+  cursor: crosshair;
 }
 
 /* PRICING GRID */
@@ -801,6 +930,14 @@ body {
 .footer-col ul li { margin-bottom: 8px; }
 .footer-col ul li a { color: #cbd5e1; text-decoration: none; }
 .footer-bottom { text-align: center; border-top: 1px solid #334155; padding-top: 20px; font-size: 0.9rem; }
+
+/* Confetti Canvas Overlay */
+#confetti-canvas {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 999;
+}
 
 /* Responsive Adjustments */
 @media (max-width: 900px) {
