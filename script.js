@@ -170,11 +170,22 @@ document.addEventListener('DOMContentLoaded', () => {
   if (checkoutForm) {
     checkoutForm.addEventListener('submit', (e) => {
       e.preventDefault();
-      const email = document.getElementById('checkout-email').value;
-      alert(`🎉 Thank you! Your download link has been sent to ${email}.\n\nClick OK to start your instant PDF download.`);
-      if (checkoutModal) checkoutModal.classList.add('hidden');
-      addStars(10);
-      triggerConfetti();
+      const nameInput = document.getElementById('checkout-name');
+      const emailInput = document.getElementById('checkout-email');
+      const name = nameInput ? nameInput.value.trim() : '';
+      const email = emailInput ? emailInput.value.trim() : '';
+
+      const selarUrl = new URL('https://selar.com/33707a8z70');
+      selarUrl.searchParams.set('currency', 'NGN');
+      if (name) {
+        selarUrl.searchParams.set('name', name);
+        selarUrl.searchParams.set('fullname', name);
+      }
+      if (email) {
+        selarUrl.searchParams.set('email', email);
+      }
+
+      window.location.href = selarUrl.toString();
     });
   }
 
