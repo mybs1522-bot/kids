@@ -208,6 +208,21 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
+  const copyDriveLinkBtn = document.getElementById('copy-drive-link-btn');
+  if (copyDriveLinkBtn) {
+    copyDriveLinkBtn.addEventListener('click', () => {
+      const driveUrl = 'https://drive.google.com/drive/folders/1ng5O8puhm7NChJNWzVKDaHlingVpfrhY?usp=drive_link';
+      navigator.clipboard.writeText(driveUrl).then(() => {
+        copyDriveLinkBtn.innerHTML = '✅ Link Copied! Save It Safely!';
+        setTimeout(() => {
+          copyDriveLinkBtn.innerHTML = '📋 Copy Download Link To Clipboard';
+        }, 4000);
+      }).catch(err => {
+        console.warn('Clipboard write failed:', err);
+      });
+    });
+  }
+
   buyBtns.forEach(btn => {
     btn.addEventListener('click', () => {
       const pack = btn.dataset.pack || '9,000+ Worksheets All-In-One Bundle';
