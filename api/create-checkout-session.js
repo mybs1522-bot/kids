@@ -40,7 +40,9 @@ module.exports = async (req, res) => {
     });
 
     const exactB64 = 'c2tfbGl2ZV81MVBSSkNzR0dzb1FUa2h5dlp0dnRNVHYxTnRzQndGbzRmSklsUUZWN3F1aWFsQXh5S3JVbkIxZkFabXBIcG05ZHNGOU11bkJ6OXY4VjdoVk9qSFBuNkE4NTAwdVhBMW5URlY=';
-    const stripeKey = process.env.STRIPE_SECRET_KEY || Buffer.from(exactB64, 'base64').toString('utf8');
+    const fallbackKey = Buffer.from(exactB64, 'base64').toString('utf8').trim();
+    const envKey = (process.env.STRIPE_SECRET_KEY || '').trim();
+    const stripeKey = (envKey.startsWith('sk_live_') && envKey.length > 50) ? envKey : fallbackKey;
 
     const requestOptions = {
       hostname: 'api.stripe.com',
