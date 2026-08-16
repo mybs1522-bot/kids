@@ -89,8 +89,31 @@ document.addEventListener('DOMContentLoaded', () => {
   setInterval(updateEvergreenTimers, 1000);
 
   // ==========================================================================
-  // Routine Tabs Switcher
+  // Hamburger Navigation Menu Logic
   // ==========================================================================
+  const hamburgerToggle = document.getElementById('hamburger-toggle');
+  const navMenu = document.getElementById('nav-menu');
+
+  if (hamburgerToggle && navMenu) {
+    hamburgerToggle.addEventListener('click', (e) => {
+      e.stopPropagation();
+      navMenu.classList.toggle('active');
+    });
+
+    // Close mobile nav menu when any nav link is clicked
+    navMenu.querySelectorAll('.nav-link').forEach(link => {
+      link.addEventListener('click', () => {
+        navMenu.classList.remove('active');
+      });
+    });
+
+    // Close menu when clicking outside
+    document.addEventListener('click', (e) => {
+      if (!hamburgerToggle.contains(e.target) && !navMenu.contains(e.target)) {
+        navMenu.classList.remove('active');
+      }
+    });
+  }
   const tabBtns = document.querySelectorAll('.tab-btn');
   const tabContents = document.querySelectorAll('.tab-content');
 
