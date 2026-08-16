@@ -235,31 +235,44 @@ document.addEventListener('DOMContentLoaded', () => {
 
       if (checkoutSubmitBtn) {
         checkoutSubmitBtn.disabled = true;
-        checkoutSubmitBtn.innerHTML = '⏳ Creating Secure Stripe Checkout...';
+        checkoutSubmitBtn.innerHTML = '⏳ Opening Stripe Card Checkout...';
       }
 
-      try {
-        const response = await fetch('/api/create-checkout-session', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ name, email })
-        });
+      const endpoints = [
+        'api/create-checkout-session/',
+        '/api/create-checkout-session/',
+        'https://kids-roan-nine.vercel.app/api/create-checkout-session/'
+      ];
 
-        const data = await response.json();
+      let sessionUrl = null;
 
-        if (data.url) {
-          window.location.href = data.url;
-        } else {
-          throw new Error(data.error || 'Failed to create checkout session');
+      for (const endpoint of endpoints) {
+        try {
+          const res = await fetch(endpoint, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ name, email })
+          });
+          if (res.ok) {
+            const data = await res.json();
+            if (data.url) {
+              sessionUrl = data.url;
+              break;
+            }
+          }
+        } catch (err) {
+          console.warn('Endpoint failed:', endpoint, err);
         }
-      } catch (err) {
-        console.warn('Stripe API fetch fallback:', err);
-        // Fallback directly to Selar if serverless API isn't reachable locally
-        const selarUrl = new URL('https://selar.com/33707a8z70');
-        selarUrl.searchParams.set('currency', 'NGN');
-        if (name) selarUrl.searchParams.set('name', name);
-        if (email) selarUrl.searchParams.set('email', email);
-        window.location.href = selarUrl.toString();
+      }
+
+      if (sessionUrl) {
+        window.location.href = sessionUrl;
+      } else {
+        alert('Could not initiate Stripe Checkout. Please refresh and try again.');
+        if (checkoutSubmitBtn) {
+          checkoutSubmitBtn.disabled = false;
+          checkoutSubmitBtn.innerHTML = '💳 Pay $29 via Stripe (Cards & Apple Pay)';
+        }
       }
     });
   }

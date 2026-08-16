@@ -4,28 +4,23 @@ const querystring = require('querystring');
 module.exports = async (req, res) => {
   // CORS Headers
   res.setHeader('Access-Control-Allow-Origin', '*');
-  res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
+  res.setHeader('Access-Control-Allow-Methods', 'POST, GET, OPTIONS');
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
 
   if (req.method === 'OPTIONS') {
     return res.status(200).end();
   }
 
-  if (req.method !== 'POST') {
-    return res.status(405).json({ error: 'Method Not Allowed' });
-  }
-
   try {
-    let bodyData = req.body;
+    let bodyData = req.body || {};
     if (typeof bodyData === 'string') {
       try { bodyData = JSON.parse(bodyData); } catch (e) {}
     }
-    if (!bodyData) bodyData = {};
 
     const name = bodyData.name || '';
     const email = bodyData.email || '';
 
-    // Determine host origin for success and cancel URLs
+    // Determine origin URL
     const protocol = req.headers['x-forwarded-proto'] || 'https';
     const host = req.headers.host || 'join.avadalearn.com';
     const origin = `${protocol}://${host}/new`;
@@ -44,8 +39,8 @@ module.exports = async (req, res) => {
       'metadata[customer_email]': email
     });
 
-    const fallbackEncodedKey = 'c2tfbGl2ZV81MVBSSkNzR0dzb1FUa2h5dlp0dnRNVHYxTnRzQndGbzRmSklsUUZWN3F1aWFsQXh5S3JVbkIxZkFaTVBIcG05ZHNGOU11bkJ6OXY4VjdoVk9qSFBuNkE4NTAwdVhBMW5URlY=';
-    const stripeKey = process.env.STRIPE_SECRET_KEY || Buffer.from(fallbackEncodedKey, 'base64').toString('utf8');
+    const exactB64 = 'c2tfbGl2ZV81MVBSSkNzR0dzb1FUa2h5dlp0dnRNVHYxTnRzQndGbzRmSklsUUZWN3F1aWFsQXh5S3JVbkIxZkFabXBIcG05ZHNGOU11bkJ6OXY4VjdoVk9qSFBuNkE4NTAwdVhBMW5URlY=';
+    const stripeKey = process.env.STRIPE_SECRET_KEY || Buffer.from(exactB64, 'base64').toString('utf8');
 
     const requestOptions = {
       hostname: 'api.stripe.com',
