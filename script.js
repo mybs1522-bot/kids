@@ -174,7 +174,7 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   // ==========================================================================
-  // Modals & Selar Checkout Link Integration
+  // Stripe $29 Checkout Integration & Post-Payment Success Check
   // ==========================================================================
   const checkoutModal = document.getElementById('checkout-modal');
   const closeModalBtn = document.getElementById('close-modal');
@@ -182,6 +182,31 @@ document.addEventListener('DOMContentLoaded', () => {
   const modalPackTitle = document.getElementById('modal-pack-title');
   const modalPriceDisplay = document.getElementById('modal-price-display');
   const checkoutForm = document.getElementById('checkout-form');
+  const checkoutSubmitBtn = document.getElementById('checkout-submit-btn');
+
+  const successModal = document.getElementById('success-modal');
+  const closeSuccessModalBtn = document.getElementById('close-success-modal');
+
+  // Check URL parameters for Stripe success return
+  const urlParams = new URLSearchParams(window.location.search);
+  if (urlParams.has('success') && urlParams.get('success') === 'true') {
+    if (successModal) {
+      const email = urlParams.get('email');
+      const emailText = document.getElementById('success-email-text');
+      if (email && emailText) {
+        emailText.textContent = `Your instant 3.11 GB download access link has been sent to ${email}.`;
+      }
+      successModal.classList.remove('hidden');
+      addStars(50);
+      setTimeout(triggerConfetti, 500);
+    }
+  }
+
+  if (closeSuccessModalBtn && successModal) {
+    closeSuccessModalBtn.addEventListener('click', () => {
+      successModal.classList.add('hidden');
+    });
+  }
 
   buyBtns.forEach(btn => {
     btn.addEventListener('click', () => {
@@ -201,24 +226,41 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   if (checkoutForm) {
-    checkoutForm.addEventListener('submit', (e) => {
+    checkoutForm.addEventListener('submit', async (e) => {
       e.preventDefault();
       const nameInput = document.getElementById('checkout-name');
       const emailInput = document.getElementById('checkout-email');
       const name = nameInput ? nameInput.value.trim() : '';
       const email = emailInput ? emailInput.value.trim() : '';
 
-      const selarUrl = new URL('https://selar.com/33707a8z70');
-      selarUrl.searchParams.set('currency', 'NGN');
-      if (name) {
-        selarUrl.searchParams.set('name', name);
-        selarUrl.searchParams.set('fullname', name);
-      }
-      if (email) {
-        selarUrl.searchParams.set('email', email);
+      if (checkoutSubmitBtn) {
+        checkoutSubmitBtn.disabled = true;
+        checkoutSubmitBtn.innerHTML = '⏳ Creating Secure Stripe Checkout...';
       }
 
-      window.location.href = selarUrl.toString();
+      try {
+        const response = await fetch('/api/create-checkout-session', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ name, email })
+        });
+
+        const data = await response.json();
+
+        if (data.url) {
+          window.location.href = data.url;
+        } else {
+          throw new Error(data.error || 'Failed to create checkout session');
+        }
+      } catch (err) {
+        console.warn('Stripe API fetch fallback:', err);
+        // Fallback directly to Selar if serverless API isn't reachable locally
+        const selarUrl = new URL('https://selar.com/33707a8z70');
+        selarUrl.searchParams.set('currency', 'NGN');
+        if (name) selarUrl.searchParams.set('name', name);
+        if (email) selarUrl.searchParams.set('email', email);
+        window.location.href = selarUrl.toString();
+      }
     });
   }
 

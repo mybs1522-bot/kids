@@ -637,8 +637,26 @@
         <input type="text" required placeholder="e.g. Sarah Jenkins" id="checkout-name">
         <label>Your Email Address (for instant download link):</label>
         <input type="email" required placeholder="parent@example.com" id="checkout-email">
-        <button type="submit" class="btn btn-primary btn-full">💳 Proceed to $29 Checkout (Selar)</button>
+        <button type="submit" id="checkout-submit-btn" class="btn btn-primary btn-full">💳 Pay $29 via Stripe (Cards & Apple Pay)</button>
       </form>
+    </div>
+  </div>
+
+  <!-- SUCCESS NOTIFICATION MODAL (POST-STRIPE PAYMENT) -->
+  <div id="success-modal" class="modal-overlay hidden">
+    <div class="modal-content text-center" style="text-align:center;padding:40px">
+      <button class="modal-close" id="close-success-modal">✕</button>
+      <div style="font-size:3.5rem;margin-bottom:12px">🎉</div>
+      <h2 style="font-family:var(--font-heading);color:#16a34a;margin-bottom:8px">Payment Successful!</h2>
+      <p style="font-size:1.1rem;color:#334155;margin-bottom:16px">
+        Thank you for purchasing the <strong>9,000+ Kids Worksheets & Activity All-In-One Bundle</strong>!
+      </p>
+      <p style="font-size:0.95rem;color:#64748b;margin-bottom:24px" id="success-email-text">
+        Your instant 3.11 GB download access link has been sent to your email.
+      </p>
+      <a href="https://selar.com/33707a8z70?currency=NGN" target="_blank" class="btn btn-primary btn-bounce" style="font-size:1.1rem">
+        ⚡ Instant Download Files (3.11 GB)
+      </a>
     </div>
   </div>
 
