@@ -427,26 +427,75 @@ body {
   font-size: 1.05rem;
 }
 
-/* INSIDE GRID */
-.inside-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: 28px;
+/* INSIDE GRID PREVIEW IMAGES */
+.inside-preview-frame {
+  width: 100%;
+  height: 180px;
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+  margin-bottom: 16px;
+  border: 2px solid #e2e8f0;
+  box-shadow: var(--shadow-sm);
 }
-.inside-card {
+.inside-preview-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+.inside-card:hover .inside-preview-img {
+  transform: scale(1.05);
+}
+
+/* REAL PRODUCT PREVIEWS GALLERY */
+.gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 24px;
+}
+.gallery-card {
   background: #fff;
   border: 3px solid #e2e8f0;
   border-radius: var(--radius-md);
-  padding: 32px 24px;
+  overflow: hidden;
   box-shadow: var(--shadow-sm);
-  transition: transform 0.25s ease;
+  transition: transform 0.25s ease, border-color 0.25s ease;
 }
-.inside-card:hover { transform: translateY(-4px); border-color: #1e90ff; }
-.inside-icon { font-size: 3rem; margin-bottom: 12px; }
-.inside-card h3 { font-family: var(--font-heading); font-size: 1.5rem; color: var(--text-dark); margin-bottom: 4px; }
-.inside-subtitle { font-size: 0.95rem; color: var(--text-muted); font-weight: 600; margin-bottom: 16px; }
-.inside-list { list-style: none; display: flex; flex-direction: column; gap: 10px; font-size: 0.95rem; }
-.inside-list td { padding: 0; display: block; }
+.gallery-card:hover {
+  transform: translateY(-6px);
+  border-color: #ff4757;
+  box-shadow: var(--shadow-md);
+}
+.gallery-img-wrapper {
+  width: 100%;
+  height: 220px;
+  overflow: hidden;
+  background: #f8fafc;
+}
+.gallery-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.35s ease;
+}
+.gallery-card:hover .gallery-img {
+  transform: scale(1.06);
+}
+.gallery-caption {
+  padding: 18px 16px;
+}
+.gallery-caption h4 {
+  font-family: var(--font-heading);
+  font-size: 1.15rem;
+  color: var(--text-dark);
+  margin-bottom: 6px;
+}
+.gallery-caption p {
+  font-size: 0.9rem;
+  color: var(--text-muted);
+  line-height: 1.4;
+}
 
 /* COMPARISON TABLE */
 .table-responsive { overflow-x: auto; }
