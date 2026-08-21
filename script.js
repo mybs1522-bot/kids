@@ -174,6 +174,29 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   // ==========================================================================
+  // Meta Pixel Tracking Helper
+  // ==========================================================================
+  function trackMetaEvent(eventName, params = {}) {
+    if (typeof window.fbq === 'function') {
+      try {
+        window.fbq('track', eventName, params);
+      } catch (err) {
+        console.warn('Meta Pixel track error:', err);
+      }
+    }
+  }
+
+  // Track ViewContent on landing
+  trackMetaEvent('ViewContent', {
+    content_name: '9,000+ Kids Worksheets & Activity All-In-One Bundle',
+    content_category: 'Preschool & Kindergarten Learning Bundle',
+    content_ids: ['bundle_9000_pages'],
+    content_type: 'product',
+    value: 29.00,
+    currency: 'USD'
+  });
+
+  // ==========================================================================
   // Stripe $29 Checkout Integration & Post-Payment Success Check
   // ==========================================================================
   const checkoutModal = document.getElementById('checkout-modal');
@@ -190,6 +213,15 @@ document.addEventListener('DOMContentLoaded', () => {
   // Check URL parameters for Stripe success return
   const urlParams = new URLSearchParams(window.location.search);
   if (urlParams.has('success') && urlParams.get('success') === 'true') {
+    // Track Meta Purchase Conversion
+    trackMetaEvent('Purchase', {
+      content_name: '9,000+ Kids Worksheets & Activity All-In-One Bundle',
+      content_ids: ['bundle_9000_pages'],
+      content_type: 'product',
+      value: 29.00,
+      currency: 'USD'
+    });
+
     if (successModal) {
       const email = urlParams.get('email');
       const emailText = document.getElementById('success-email-text');
@@ -226,7 +258,16 @@ document.addEventListener('DOMContentLoaded', () => {
   buyBtns.forEach(btn => {
     btn.addEventListener('click', () => {
       const pack = btn.dataset.pack || '9,000+ Worksheets All-In-One Bundle';
-      const price = btn.dataset.price || '29';
+      const price = parseFloat(btn.dataset.price) || 29;
+
+      // Track Meta InitiateCheckout event
+      trackMetaEvent('InitiateCheckout', {
+        content_name: pack,
+        content_ids: ['bundle_9000_pages'],
+        content_type: 'product',
+        value: price,
+        currency: 'USD'
+      });
 
       if (modalPackTitle) modalPackTitle.textContent = pack;
       if (modalPriceDisplay) modalPriceDisplay.textContent = `$${price}`;
@@ -247,6 +288,13 @@ document.addEventListener('DOMContentLoaded', () => {
       const emailInput = document.getElementById('checkout-email');
       const name = nameInput ? nameInput.value.trim() : '';
       const email = emailInput ? emailInput.value.trim() : '';
+
+      // Track Meta AddPaymentInfo event
+      trackMetaEvent('AddPaymentInfo', {
+        content_name: '9,000+ Kids Worksheets & Activity All-In-One Bundle',
+        value: 29.00,
+        currency: 'USD'
+      });
 
       if (checkoutSubmitBtn) {
         checkoutSubmitBtn.disabled = true;
